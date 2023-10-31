@@ -3,10 +3,11 @@ return {
         "EdenEast/nightfox.nvim",
     },
     {
-        "Shatur/neovim-ayu",
-    },
-    {
-        "mcchrish/zenbones.nvim",
+        "askfiy/visual_studio_code",
+        --priority = 100,
+        --config = function()
+        --    vim.cmd([[colorscheme visual_studio_code]])
+        --end,
     },
     {
         "nyoom-engineering/oxocarbon.nvim",
