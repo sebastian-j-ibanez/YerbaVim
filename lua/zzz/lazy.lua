@@ -13,3 +13,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("zzz.plugins")
+vim.cmd([[colorscheme visual_studio_code]])
