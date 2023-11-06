@@ -18,7 +18,6 @@ function ToggleVExplorer()
                 vim.cmd('wincmd w')
                 cur_win_num = vim.fn.winnr()
             end
-
             vim.cmd('close')
         end
 
@@ -45,7 +44,6 @@ function ToggleTerm()
                 vim.cmd('wincmd w')
                 cur_win_num = vim.fn.winnr()
             end
-
             vim.cmd('close')
         end
 
