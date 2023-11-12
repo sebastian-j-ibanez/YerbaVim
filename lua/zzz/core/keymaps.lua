@@ -74,3 +74,8 @@ vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true, silent = true })
 
+-- TELESCOPE
+vim.keymap.set('n', '<leader>ff', ":Telescope find_files<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fg', ":Telescope live_grep<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fb', ":Telescope buffers<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fh', ":Telescope help_tags<CR>", { silent = true })
