@@ -13,4 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("zzz.plugins")
-vim.cmd([[colorscheme tokyonight-storm]])
+
+-- Specify startup theme
+-- Default: bamboo
+--vim.cmd([[colorscheme theme-name]])
