@@ -15,5 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("zzz.plugins")
 
 -- Specify startup theme
--- Default: bamboo
---vim.cmd([[colorscheme theme-name]])
+-- If unspecified,
+-- Default will is: bamboo
+vim.cmd([[colorscheme thematrix]])
