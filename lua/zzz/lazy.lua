@@ -18,3 +18,6 @@ require("lazy").setup("zzz.plugins")
 -- If unspecified,
 -- Default will is: bamboo
 vim.cmd([[colorscheme thematrix]])
+
+-- Enable transparency
+vim.cmd("TransparentEnable")
