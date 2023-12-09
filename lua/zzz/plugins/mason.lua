@@ -31,5 +31,24 @@ return {
             },
             automatic_installation = true,
         })
+        -- Setup installed servers
+        mason_lspconfig.setup_handlers({
+            function(server_name)
+                require("lspconfig")[server_name].setup {}
+            end,
+            -- Lua server config
+            ["lua_ls"] = function ()
+                local lspconfig = require("lspconfig")
+                lspconfig.lua_ls.setup {
+                    settings = {
+                        Lua = {
+                            diagnostics = {
+                                globals = { "vim" }
+                            }
+                        }
+                    }
+                }
+            end,
+        })
     end,
 }

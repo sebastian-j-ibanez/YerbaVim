@@ -15,9 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("zzz.plugins")
 
 -- Specify startup theme
--- If unspecified,
--- Default will is: bamboo
-vim.cmd([[colorscheme thematrix]])
+-- Default: bamboo
+vim.cmd([[colorscheme carbonfox]])
 
 -- Enable transparency
-vim.cmd("TransparentEnable")
+-- vim.cmd("TransparentEnable")
