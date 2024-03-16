@@ -2,6 +2,8 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     config = function()
-        require('lualine').setup()
+        require('lualine').setup {
+            theme = 'nordic'
+        }
     end,
 }

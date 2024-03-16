@@ -15,8 +15,9 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("zzz.plugins")
 
 -- Specify startup theme
--- Default: bamboo
-vim.cmd([[colorscheme poimandres]])
+-- Replace ??? with the desired theme name
+-- Default: nord
+-- vim.cmd([[colorscheme ???]])
 
 -- Enable transparency
 vim.cmd("TransparentEnable")
