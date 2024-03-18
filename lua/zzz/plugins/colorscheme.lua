@@ -1,13 +1,16 @@
 return {
-    -- Nightfox
+    --Evergarden
     {
-        "EdenEast/nightfox.nvim",
+        'comfysage/evergarden',
+        opts = {
+            transparent_background = false,
+            contrast_dark = 'medium', -- 'hard'|'medium'|'soft'
+            overrides = { }, -- add custom overrides
+        }
     },
     --Nord
     {
         "shaunsingh/nord.nvim",
-        lazy = false,
-        priority = 1000,
         config = function()
             vim.g.nord_borders = true
             vim.g.nord_italic = false
@@ -26,9 +29,9 @@ return {
     {
         'kvrohit/rasmus.nvim',
     },
-    -- Tokyonight
+    -- Skull
     {
-        "folke/tokyonight.nvim",
+        'kxzk/skull-vim',
     },
     -- VS Code
     {
