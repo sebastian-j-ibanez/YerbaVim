@@ -1,12 +1,17 @@
 return {
-    --Evergarden
+    -- Miasma
     {
-        'comfysage/evergarden',
-        opts = {
-            transparent_background = false,
-            contrast_dark = 'medium', -- 'hard'|'medium'|'soft'
-            overrides = { }, -- add custom overrides
-        }
+        "xero/miasma.nvim",
+        branch = "dev",
+        dependencies = {
+            "rktjmp/lush.nvim",
+            "rktjmp/shipwright.nvim",
+        },
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.cmd("colorscheme miasma")
+        end,
     },
     --Nord
     {
