@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("zzz.plugins")
 
 -- Specify startup theme
-vim.cmd([[colorscheme miasma]])
+vim.cmd([[colorscheme rasmus]])
 
 -- Enable transparency
 vim.cmd("TransparentDisable")
