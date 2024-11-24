@@ -16,6 +16,3 @@ require("lazy").setup("zzz.plugins")
 
 -- Specify startup theme
 vim.cmd([[colorscheme rasmus]])
-
--- Enable transparency
-vim.cmd("TransparentDisable")
