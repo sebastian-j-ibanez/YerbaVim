@@ -7,7 +7,6 @@ return {
     init = function() vim.g.barbar_auto_setup = false end,
     opts = {
         animation = true,
-        auto_hide = 0,
         tabpages = true,
         clickable = true,
         focus_on_close = 'right',
@@ -26,7 +25,7 @@ return {
         },
         gitsigns = {
             added = {enabled = true, icon = '+'},
-            changed = {enabled = true, icon = '~'},
+            changed = {enabled = true, icon = '*'},
             deleted = {enabled = true, icon = '-'},
         },
     },
