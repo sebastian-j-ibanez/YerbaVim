@@ -3,7 +3,12 @@ return {
     lazy = false,
     config = function()
         require('lualine').setup {
-            theme = 'nordic'
+            options = {
+                icons_enables = true,
+                theme = 'auto',
+                component_separators = { left = '', right = '' },
+                section_separators = { left = '', right = '' },
+            },
         }
     end,
 }
