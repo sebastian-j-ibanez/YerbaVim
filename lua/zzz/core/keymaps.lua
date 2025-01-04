@@ -53,5 +53,5 @@ map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
 -- CUSTOM BUFFERS
 local buffers = require('zzz.core.buffers')
-map('n', '<leader>e', buffers.ToggleFileExplorer, { desc = 'Toggle file explorer', table.unpack(opts) })
-map('n', '<leader>t', buffers.ToggleTerminal, { desc = 'Toggle terminal', table.unpack(opts) })
+map('n', '<leader>e', buffers.ToggleFileExplorer, { desc = 'Toggle file explorer', unpack(opts) })
+map('n', '<leader>t', buffers.ToggleTerminal, { desc = 'Toggle terminal', unpack(opts) })
