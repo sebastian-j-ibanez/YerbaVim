@@ -15,4 +15,4 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("zzz.plugins")
 
 -- Specify startup theme
-vim.cmd([[colorscheme no-clown-fiesta]])
+vim.cmd([[colorscheme modus_operandi]])
