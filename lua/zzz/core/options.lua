@@ -9,6 +9,7 @@ vim.opt.showmatch = true 		-- Highlights matching brace pairs
 vim.opt.cursorline = true	-- Highlight cursor line underneath the cursor horizontally
 vim.opt.splitbelow = true   -- open new vertical split bottom
 vim.opt.splitright = true   -- open new horizontal splits right
+vim.g.neovide_floating_corner_radius = 0.7
 
 -- Netrw
 vim.g.netrw_banner = 0
