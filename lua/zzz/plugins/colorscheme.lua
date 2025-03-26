@@ -1,13 +1,11 @@
 return {
     {
-        "aktersnurra/no-clown-fiesta.nvim",
-  	    priority = 1000,
-  	    config = config,
-    	lazy = false,
+        "Mofiqul/vscode.nvim",
+        priority = 1000,
+        lazy = false
     },
     {
        "miikanissi/modus-themes.nvim",
-        priority = 1000,
     }
 }
 
