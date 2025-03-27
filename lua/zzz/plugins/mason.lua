@@ -27,7 +27,6 @@ return {
         config = function()
             local mason_lspconfig = require("mason-lspconfig")
             mason_lspconfig.setup({
-                -- list of servers to automatically install
                 ensure_installed = {
                     "clangd",
                     "cmake",
@@ -80,14 +79,10 @@ return {
             -- Add on_attach function to every LSP
             mason_lspconfig.setup_handlers({
                 function(server_name)
-                    -- Default setup:
-                    --     Add on_attach function
                     lspconfig[server_name].setup({
                         on_attach = on_attach,
                     })
-                    -- Lua lsp config:
-                    --     Set's the 'vim' global
-                    --     Load config files
+
                     lspconfig["lua_ls"].setup({
                         on_attach = on_attach,
                         settings = {
