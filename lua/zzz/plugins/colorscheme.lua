@@ -5,7 +5,8 @@ return {
         lazy = false
     },
     {
-       "miikanissi/modus-themes.nvim",
+        'projekt0n/github-nvim-theme',
+        name = 'github-theme'
     }
 }
 

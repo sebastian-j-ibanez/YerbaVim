@@ -46,22 +46,22 @@ return {
                 opts.buffer = bufnr
 
                 opts.desc = "Show references"
-                map("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+                map("n", "<leader>gr", "<cmd>Telescope lsp_references<CR>", opts)
 
                 opts.desc = "Show definitions"
-                map("n", "gD", "<cmd>Telescope lsp_definitions<CR>", opts)
+                map("n", "<leader>gD", "<cmd>Telescope lsp_definitions<CR>", opts)
 
                 opts.desc = "Show type definitions"
-                map("n", "gd", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+                map("n", "<leader>gd", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
                 opts.desc = "Show implementations"
-                map("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+                map("n", "<leader>gi", "<cmd>Telescope lsp_implementations<CR>", opts)
 
                 opts.desc = "Show type definitions"
-                map("n", "gt", "", opts)
+                map("n", "<leader>gt", "", opts)
 
                 opts.desc = "Rename"
-                map("n", "rn", vim.lsp.buf.rename, opts)
+                map("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
                 opts.desc = "Show documentation"
                 map("n", "K", vim.lsp.buf.hover, opts)
@@ -83,6 +83,7 @@ return {
                         on_attach = on_attach,
                     })
 
+                    -- Add vim/nvim namespace to lua_ls
                     lspconfig["lua_ls"].setup({
                         on_attach = on_attach,
                         settings = {
