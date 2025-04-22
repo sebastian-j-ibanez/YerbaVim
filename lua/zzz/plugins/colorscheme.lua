@@ -4,6 +4,11 @@ return {
         lazy = false
     },
     {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000
+    },
+    {
         'NTBBloodbath/doom-one.nvim',
             lazy = false,
             priority = 1000,
