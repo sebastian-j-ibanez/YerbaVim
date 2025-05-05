@@ -29,7 +29,6 @@ return {
             mason_lspconfig.setup({
                 ensure_installed = {
                     "clangd",
-                    "cmake",
                     "gopls",
                     "pylsp",
                     "rust_analyzer",
@@ -42,7 +41,7 @@ return {
             local lspconfig = require("lspconfig")
             local map = vim.keymap.set
             local opts = { noremap = true, silent = true }
-            local on_attach = function(client, bufnr)
+            local on_attach = function(_, bufnr)
                 opts.buffer = bufnr
 
                 opts.desc = "Show references"
