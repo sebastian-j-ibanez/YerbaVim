@@ -1,3 +1,6 @@
+-- Inspired by the Mason configuration in kickstart.nvim
+-- kickstart.nvim and YerbaVim are distributed under the MIT license
+-- https://github.com/nvim-lua/kickstart.nvim
 return {
     -- Mason
     {
@@ -17,75 +20,51 @@ return {
             })
         end
     },
-    -- Mason LSP Config
     {
-        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
         dependencies = {
             "williamboman/mason.nvim",
-            "neovim/nvim-lspconfig",
+            "williamboman/mason-lspconfig.nvim",
         },
-        config = function()
-            local mason_lspconfig = require("mason-lspconfig")
-            mason_lspconfig.setup({
-                ensure_installed = {
-                    "clangd",
-                    "gopls",
-                    "pylsp",
-                    "rust_analyzer",
-                    "lua_ls",
-                },
-                automatic_installation = true,
+        config = function ()
+            -- LspAttach is run whenever a buffer is opened that is associated with an LSP
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+                callback = function(event)
+                    -- Helper function for keymaps
+                    local map = function(keys, func, desc, mode)
+                        mode = mode or "n"
+                        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+                    end
+
+                    map("<leader>gr", vim.lsp.buf.references, "Show references")
+
+                    map("<leader>gD", vim.lsp.buf.definition, "Show definitions")
+
+                    map("<leader>gd", vim.lsp.buf.type_definition, "Show type definitions")
+
+                    map("<leader>gi", vim.lsp.buf.implementation, "Show implementations")
+
+                    map("<leader>rn", vim.lsp.buf.rename, "Rename")
+
+                    map("K", vim.lsp.buf.hover, "Show documentation")
+
+                    map("<leader>d", vim.diagnostic.open_float, "Show line diagnostics")
+
+                    map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
+
+                    map("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
+
+                    map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
+                end,
             })
 
-            -- Setup lspconfig
-            local lspconfig = require("lspconfig")
-            local map = vim.keymap.set
-            local opts = { noremap = true, silent = true }
-            local on_attach = function(_, bufnr)
-                opts.buffer = bufnr
-
-                opts.desc = "Show references"
-                map("n", "<leader>gr", "<cmd>Telescope lsp_references<CR>", opts)
-
-                opts.desc = "Show definitions"
-                map("n", "<leader>gD", "<cmd>Telescope lsp_definitions<CR>", opts)
-
-                opts.desc = "Show type definitions"
-                map("n", "<leader>gd", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-
-                opts.desc = "Show implementations"
-                map("n", "<leader>gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-
-                opts.desc = "Show type definitions"
-                map("n", "<leader>gt", "", opts)
-
-                opts.desc = "Rename"
-                map("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-                opts.desc = "Show documentation"
-                map("n", "K", vim.lsp.buf.hover, opts)
-
-                opts.desc = "Show line diagnostics"
-                map("n", "<leader>d", vim.diagnostic.open_float, opts)
-
-                opts.desc = "Go to previous diagnostic"
-                map("n", "[d", vim.diagnostic.goto_prev, opts)
-
-                opts.desc = "Go to next diagnostic"
-                map("n", "]d", vim.diagnostic.goto_next, opts)
-            end
-
-            -- Add on_attach function to every LSP
-            mason_lspconfig.setup_handlers({
-                function(server_name)
-                    lspconfig[server_name].setup({
-                        on_attach = on_attach,
-                    })
-
-                    -- Add vim/nvim namespace to lua_ls
-                    lspconfig["lua_ls"].setup({
-                        on_attach = on_attach,
-                        settings = {
+            local servers = {
+                gopls = {},
+                rust_analyzer = {},
+                pylsp = {},
+                lua_ls = {
+                    settings = {
                             Lua = {
                                 diagnostics = {
                                     globals = { "vim" },
@@ -97,10 +76,23 @@ return {
                                     }
                                 }
                             }
-                        }
-                    })
+                    }
+                },
+            }
+
+        -- Setup LSP servers
+        local mason_lspconfig = require("mason-lspconfig")
+        mason_lspconfig.setup({
+            ensure_installed = {},
+            automatic_installation = true,
+            handlers = {
+                function(server_name)
+                    local server = servers[server_name] or {}
+                    server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                    require("lspconfig")[server_name].setup(server)
                 end,
-            })
+            },
+        })
         end
-    }
+    },
 }
