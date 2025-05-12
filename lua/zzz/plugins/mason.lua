@@ -12,9 +12,9 @@ return {
             require("mason").setup({
                 ui = {
                     icons = {
-                        package_installed = "✓",
-                        package_pending = "➜",
-                        package_uninstalled = "✗"
+                        package_installed = "|>",
+                        package_pending = "=>",
+                        package_uninstalled = "---"
                     }
                 }
             })
@@ -38,23 +38,14 @@ return {
                     end
 
                     map("<leader>gr", vim.lsp.buf.references, "Show references")
-
                     map("<leader>gD", vim.lsp.buf.definition, "Show definitions")
-
                     map("<leader>gd", vim.lsp.buf.type_definition, "Show type definitions")
-
                     map("<leader>gi", vim.lsp.buf.implementation, "Show implementations")
-
                     map("<leader>rn", vim.lsp.buf.rename, "Rename")
-
                     map("K", vim.lsp.buf.hover, "Show documentation")
-
                     map("<leader>d", vim.diagnostic.open_float, "Show line diagnostics")
-
                     map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
-
                     map("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
-
                     map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
                 end,
             })
@@ -65,34 +56,34 @@ return {
                 pylsp = {},
                 lua_ls = {
                     settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { "vim" },
-                                },
-                                workspace = {
-                                    library = {
-                                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                                        [vim.fn.stdpath("config") .. "/lua"] = true,
-                                    }
+                        Lua = {
+                            diagnostics = {
+                                globals = { "vim" },
+                            },
+                            workspace = {
+                                library = {
+                                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                                    [vim.fn.stdpath("config") .. "/lua"] = true,
                                 }
                             }
+                        }
                     }
                 },
             }
 
-        -- Setup LSP servers
-        local mason_lspconfig = require("mason-lspconfig")
-        mason_lspconfig.setup({
-            ensure_installed = {},
-            automatic_installation = true,
-            handlers = {
-                function(server_name)
-                    local server = servers[server_name] or {}
-                    server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                    require("lspconfig")[server_name].setup(server)
-                end,
-            },
-        })
+            -- Setup LSP servers
+            local mason_lspconfig = require("mason-lspconfig")
+            mason_lspconfig.setup({
+                ensure_installed = {},
+                automatic_installation = true,
+                handlers = {
+                    function(server_name)
+                        local server = servers[server_name] or {}
+                        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                        require("lspconfig")[server_name].setup(server)
+                    end,
+                },
+            })
         end
     },
 }
