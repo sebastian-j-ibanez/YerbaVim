@@ -5,6 +5,10 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 vim.g.mapleader=" "
 
+-- AGGRESSIVE INDENTING
+map('n', '<Tab>', '==', opts)
+map('v', '<Tab>', '=', opts)
+
 -- WINDOW NAVIGATION
 map('t', '<A-h>', '<C-\\><C-n><C-w>h', opts)
 map('t', '<A-j>', '<C-\\><C-n><C-w>j', opts)
