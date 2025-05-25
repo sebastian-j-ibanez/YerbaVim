@@ -1,8 +1,7 @@
--- Inspired by the Mason configuration in kickstart.nvim
--- kickstart.nvim and YerbaVim are distributed under the MIT license
--- https://github.com/nvim-lua/kickstart.nvim
+-- Inspired by Mason configurations from:
+-- https://kosu.me/
+-- kickstart.nvim
 return {
-    -- Mason
     {
         "williamboman/mason.nvim",
         dependencies = {
@@ -12,9 +11,9 @@ return {
             require("mason").setup({
                 ui = {
                     icons = {
-                        package_installed = "|>",
-                        package_pending = "=>",
-                        package_uninstalled = "---"
+                        package_installed = "->",
+                        package_pending = "~~",
+                        package_uninstalled = "-"
                     }
                 }
             })
@@ -25,18 +24,62 @@ return {
         dependencies = {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
+            "hrsh7th/cmp-nvim-lsp"
         },
-        config = function ()
-            -- LspAttach is run whenever a buffer is opened that is associated with an LSP
+        config = function()
+            require("mason").setup()
+
+            -- Setup LSP servers
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "gopls",
+                    "rust_analyzer",
+                    "pylsp",
+                    "ts_ls",
+                    "lua_ls"
+                },
+                automatic_installation = true
+            })
+
+            -- Generic config
+            vim.lsp.config('*', {})
+
+            -- Lua config
+            vim.lsp.config('lua_ls', {
+                settings = {
+                    Lua = {
+                        runtime = { version = 'Lua 5.1' },
+                        diagnostics = {
+                            globals = { 'vim' },
+                        },
+                    },
+                },
+            })
+
+            -- Typescript
+            local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server")
+            local vue_plugin_path = vue_ls_path .. "/node_modules/@vue/language-server"
+            vim.lsp.config('ts_ls', {
+                init_options = {
+                    plugins = {
+                        {
+                            name = "@vue/typescript-plugin",
+                            location = vue_plugin_path,
+                            languages = { "vue" },
+                        },
+                    },
+                },
+                filetypes = { "typescript", "javascript", "vue" },
+            })
+
+            -- Map LSP keybindings when an LSP server is attached.
             vim.api.nvim_create_autocmd("LspAttach", {
-                group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+                group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
                 callback = function(event)
-                    -- Helper function for keymaps
                     local map = function(keys, func, desc, mode)
                         mode = mode or "n"
                         vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
                     end
-
                     map("<leader>gr", vim.lsp.buf.references, "Show references")
                     map("<leader>gD", vim.lsp.buf.definition, "Show definitions")
                     map("<leader>gd", vim.lsp.buf.type_definition, "Show type definitions")
@@ -46,44 +89,8 @@ return {
                     map("<leader>d", vim.diagnostic.open_float, "Show line diagnostics")
                     map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
                     map("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
-                    map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
                 end,
             })
-
-            local servers = {
-                gopls = {},
-                rust_analyzer = {},
-                pylsp = {},
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { "vim" },
-                            },
-                            workspace = {
-                                library = {
-                                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                                    [vim.fn.stdpath("config") .. "/lua"] = true,
-                                }
-                            }
-                        }
-                    }
-                },
-            }
-
-            -- Setup LSP servers
-            local mason_lspconfig = require("mason-lspconfig")
-            mason_lspconfig.setup({
-                ensure_installed = {},
-                automatic_installation = true,
-                handlers = {
-                    function(server_name)
-                        local server = servers[server_name] or {}
-                        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                        require("lspconfig")[server_name].setup(server)
-                    end,
-                },
-            })
-        end
+        end,
     },
 }

@@ -1,0 +1,113 @@
+-- Inspired by the Mason configuration in kickstart.nvim
+-- kickstart.nvim and YerbaVim are distributed under the MIT license
+-- https://github.com/nvim-lua/kickstart.nvim
+return {
+    -- Mason
+    {
+        "williamboman/mason.nvim",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+        },
+        config = function()
+            require("mason").setup({
+                ui = {
+                    icons = {
+                        package_installed = "|>",
+                        package_pending = "=>",
+                        package_uninstalled = "-"
+                    }
+                }
+            })
+        end
+    },
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "hrsh7th/cmp-nvim-lsp"
+        },
+        config = function ()
+            -- LspAttach is run whenever a buffer is opened that is associated with an LSP
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+                callback = function(event)
+                    -- Helper function for keymaps
+                    local map = function(keys, func, desc, mode)
+                        mode = mode or "n"
+                        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+                    end
+
+                    map("<leader>gr", vim.lsp.buf.references, "Show references")
+                    map("<leader>gD", vim.lsp.buf.definition, "Show definitions")
+                    map("<leader>gd", vim.lsp.buf.type_definition, "Show type definitions")
+                    map("<leader>gi", vim.lsp.buf.implementation, "Show implementations")
+                    map("<leader>rn", vim.lsp.buf.rename, "Rename")
+                    map("K", vim.lsp.buf.hover, "Show documentation")
+                    map("<leader>d", vim.diagnostic.open_float, "Show line diagnostics")
+                    map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
+                    map("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
+                    map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
+                end,
+            })
+
+            local servers = {
+                gopls = {},
+                rust_analyzer = {},
+                pylsp = {},
+                ts_ls = {},
+                lua_ls = {
+                    settings = {
+                        Lua = {
+                            diagnostics = {
+                                globals = { "vim" },
+                            },
+                            workspace = {
+                                library = {
+                                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                                    [vim.fn.stdpath("config") .. "/lua"] = true,
+                                }
+                            }
+                        }
+                    }
+                },
+            }
+
+            -- Setup LSP servers
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local mason_lspconfig = require("mason-lspconfig")
+            mason_lspconfig.setup({
+                ensure_installed = {},
+                automatic_installation = true,
+                handlers = {
+                    -- Generic
+                    function(server_name)
+                        local server = servers[server_name] or {}
+                        server.capabilities = capabilities
+                        require("lspconfig")[server_name].setup(server)
+                    end,
+                    -- Typescript
+                    ['ts_ls'] = function ()
+                        local mason_registry = require('mason-registry')
+                        local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+
+                        local lspconfig = require('lspconfig')
+                        lspconfig.ts_ls.setup {
+                            init_options = {
+                                plugins = {
+                                    {
+                                        name = '@vue/typescript-plugin',
+                                        --location = vue_language_server_path,
+                                        location = vim.fn.expand("$MASON/packages/vue-language-server/node_modules/@vue/language-server"),
+                                        languages = { 'vue' },
+                                    },
+                                },
+                            },
+                            filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+                        }
+                    end,
+                },
+            })
+        end
+    },
+}
