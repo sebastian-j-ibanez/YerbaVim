@@ -1,12 +1,11 @@
 return {
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
+        "olivercederborg/poimandres.nvim",
     },
     {
-        "olivercederborg/poimandres.nvim",
+        "kvrohit/rasmus.nvim",
         lazy = false,
-        priority = 1000,
+        priority = 1000
     }
 }
 
