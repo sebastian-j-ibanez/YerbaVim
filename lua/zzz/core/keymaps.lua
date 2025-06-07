@@ -32,7 +32,5 @@ map('n', '<leader>fg', ":Telescope live_grep<CR>", { silent = true })
 map('n', '<leader>fb', ":Telescope buffers<CR>", { silent = true })
 map('n', '<leader>fh', ":Telescope help_tags<CR>", { silent = true })
 
--- CUSTOM BUFFERS
-local buffers = require('zzz.core.buffers')
-map('n', '<leader>e', buffers.ToggleFileExplorer, { desc = 'Toggle file explorer', unpack(opts) })
-map('n', '<leader>t', buffers.ToggleTerminal, { desc = 'Toggle terminal', unpack(opts) })
+-- REMOVE SEARCH HIGHLIGHTING
+map('n', '<leader>n', ":noh<CR>", { silent = true })
