@@ -1,9 +1,9 @@
 return {
     {
-        "olivercederborg/poimandres.nvim",
+        "kvrohit/rasmus.nvim",
     },
     {
-        "kvrohit/rasmus.nvim",
+        "miikanissi/modus-themes.nvim",
         lazy = false,
         priority = 1000
     }

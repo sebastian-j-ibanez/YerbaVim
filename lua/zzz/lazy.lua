@@ -16,5 +16,5 @@ require("lazy").setup("zzz.plugins")
 
 
 -- Specify startup theme
-vim.cmd([[colorscheme rasmus]])
+vim.cmd([[colorscheme modus_operandi]])
 
