@@ -14,7 +14,5 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("zzz.plugins")
 
-
--- Specify startup theme
-vim.cmd([[colorscheme modus_operandi]])
+vim.cmd([[colorscheme fleet]])
 

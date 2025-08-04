@@ -11,9 +11,9 @@ return {
             require("mason").setup({
                 ui = {
                     icons = {
-                        package_installed = "->",
-                        package_pending = "~~",
-                        package_uninstalled = "-"
+                        package_installed = "",
+                        package_pending = "󰦗",
+                        package_uninstalled = ""
                     }
                 }
             })
@@ -32,11 +32,13 @@ return {
             -- Setup LSP servers
             require("mason-lspconfig").setup({
                 ensure_installed = {
+                    "lua_ls",
+                    "clangd",
                     "gopls",
                     "rust_analyzer",
                     "pylsp",
                     "ts_ls",
-                    "lua_ls"
+                    "vue_ls"
                 },
                 automatic_installation = true
             })
@@ -56,10 +58,18 @@ return {
                 },
             })
 
+            require("lspconfig").ts_ls.setup({
+                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+            })
+
+            require("lspconfig").volar.setup({
+                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            })
+
             -- Typescript
             local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server")
             local vue_plugin_path = vue_ls_path .. "/node_modules/@vue/language-server"
-            vim.lsp.config('ts_ls', {
+            vim.lsp.config('vue_ls', {
                 init_options = {
                     plugins = {
                         {
@@ -81,8 +91,8 @@ return {
                         vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
                     end
                     map("<leader>gr", vim.lsp.buf.references, "Show references")
-                    map("<leader>gD", vim.lsp.buf.definition, "Show definitions")
-                    map("<leader>gd", vim.lsp.buf.type_definition, "Show type definitions")
+                    map("<leader>gd", vim.lsp.buf.definition, "Show definitions")
+                    map("<leader>gD", vim.lsp.buf.type_definition, "Show type definitions")
                     map("<leader>gi", vim.lsp.buf.implementation, "Show implementations")
                     map("<leader>rn", vim.lsp.buf.rename, "Rename")
                     map("K", vim.lsp.buf.hover, "Show documentation")
