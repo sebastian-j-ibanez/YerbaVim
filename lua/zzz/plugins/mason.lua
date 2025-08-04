@@ -32,9 +32,10 @@ return {
             -- Setup LSP servers
             require("mason-lspconfig").setup({
                 ensure_installed = {
-                    "lua_ls",
                     "clangd",
                     "gopls",
+                    "hls",
+                    "lua_ls",
                     "ocamllsp",
                     "pylsp",
                     "rust_analyzer",
