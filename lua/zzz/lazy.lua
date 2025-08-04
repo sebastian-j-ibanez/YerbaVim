@@ -14,5 +14,5 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("zzz.plugins")
 
-vim.cmd([[colorscheme modus_operandi]])
+vim.cmd([[colorscheme github_dark_default]])
 

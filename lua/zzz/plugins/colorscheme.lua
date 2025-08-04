@@ -1,8 +1,5 @@
 return {
     {
-        "felipeagc/fleet-theme-nvim",
-    },
-    {
         "miikanissi/modus-themes.nvim",
         --lazy = false,
         --priority = 1000,
@@ -16,6 +13,10 @@ return {
                 },
             })
         end
+    },
+    {
+        'projekt0n/github-nvim-theme',
+        name = 'github-theme'
     }
 }
 
