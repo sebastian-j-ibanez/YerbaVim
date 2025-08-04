@@ -35,8 +35,9 @@ return {
                     "lua_ls",
                     "clangd",
                     "gopls",
-                    "rust_analyzer",
+                    "ocamllsp",
                     "pylsp",
+                    "rust_analyzer",
                     "ts_ls",
                     "vue_ls"
                 },
