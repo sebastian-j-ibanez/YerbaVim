@@ -84,6 +84,16 @@ return {
                 filetypes = { "typescript", "javascript", "vue" },
             })
 
+            require("lspconfig").sourcekit.setup({
+                capabilities = {
+                    workspace = {
+                        didChangeWatchedFiles = {
+                            dynamicRegistration = true,
+                        },
+                    },
+                },
+            })
+
             -- Map LSP keybindings when an LSP server is attached.
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),

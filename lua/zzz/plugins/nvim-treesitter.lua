@@ -6,16 +6,17 @@ return {
 
         configs.setup({
             ensure_installed = {
-                "lua",
                 "c",
                 "cpp",
                 "go",
-                "rust",
-                "python",
-                "javascript",
+                "haskell",
                 "html",
+                "javascript",
+                "lua",
                 "ocaml",
-                "haskell"
+                "python",
+                "rust",
+                "swift",
             },
             sync_install = true,
             highlight = { enable = true },
