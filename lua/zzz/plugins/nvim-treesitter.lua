@@ -16,7 +16,6 @@ return {
                 "ocaml",
                 "python",
                 "rust",
-                "swift",
             },
             sync_install = true,
             highlight = { enable = true },

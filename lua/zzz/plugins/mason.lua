@@ -34,13 +34,10 @@ return {
                 ensure_installed = {
                     "clangd",
                     "gopls",
-                    "hls",
                     "lua_ls",
-                    "ocamllsp",
                     "pylsp",
                     "rust_analyzer",
-                    "ts_ls",
-                    "vue_ls"
+                    "ts_ls"
                 },
                 automatic_installation = true
             })
@@ -48,7 +45,7 @@ return {
             -- Generic config
             vim.lsp.config('*', {})
 
-            -- Lua config
+            -- Lua
             vim.lsp.config('lua_ls', {
                 settings = {
                     Lua = {
@@ -60,39 +57,21 @@ return {
                 },
             })
 
+            -- Typescript
             require("lspconfig").ts_ls.setup({
                 filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
             })
 
-            require("lspconfig").volar.setup({
-                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-            })
-
-            -- Typescript
-            local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server")
-            local vue_plugin_path = vue_ls_path .. "/node_modules/@vue/language-server"
-            vim.lsp.config('vue_ls', {
-                init_options = {
-                    plugins = {
-                        {
-                            name = "@vue/typescript-plugin",
-                            location = vue_plugin_path,
-                            languages = { "vue" },
-                        },
-                    },
-                },
-                filetypes = { "typescript", "javascript", "vue" },
-            })
-
-            require("lspconfig").sourcekit.setup({
-                capabilities = {
-                    workspace = {
-                        didChangeWatchedFiles = {
-                            dynamicRegistration = true,
-                        },
-                    },
-                },
-            })
+            -- Swift
+            --require("lspconfig").sourcekit.setup({
+            --    capabilities = {
+            --        workspace = {
+            --            didChangeWatchedFiles = {
+            --                dynamicRegistration = true,
+            --            },
+            --        },
+            --    },
+            --})
 
             -- Map LSP keybindings when an LSP server is attached.
             vim.api.nvim_create_autocmd("LspAttach", {
